@@ -15,7 +15,7 @@ PORT = 6667
 PASS = ""#private 
 readbuffer = ""
 MODT = False
-dice = ["1", "2", "3", "4", "5", "6"]
+
 
  # Passing credentials to join IRC 
 s = socket.socket()
@@ -28,10 +28,9 @@ s.send("JOIN #channelname \r\n")
 def Send_message(message):
     s.send("PRIVMSG #channelname :" + message + "\r\n")
 
-Send_message("/me has re-joined ")
 
 def hello_world():
-    threading.Timer(120.0, hello_world).start() #called every min to keep session active, sometimes twitch dosent send a PING and expects a PONG
+    threading.Timer(120.0, hello_world).start() #called every min to keep session active, sometimes twitch wont send a PING and expects a PONG
     s.send("PING\r\n")
 
 hello_world()
@@ -43,7 +42,7 @@ while True:
         
    
     for line in temp:
-        #Twitch sends PING to check if youre active, if you are it sends PONG or else it closes the session.
+        #Twitch sends PING to check if youre active, if you are; send PONG or else it closes the session.
         if (line[0] == "PING"):
             s.send("PONG\r" % line[1])
             
@@ -72,7 +71,7 @@ while True:
                     #Commands example
 
                     if ("!dice") in message:
-                            dicec = str(random.choice(dice))
+                            dicec = str(random.choice([1, 2, 3, 4, 5, 6])
                             Send_message("/me You rolled a " + dicec + " " + username) 
 
                 for l in parts:
